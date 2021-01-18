@@ -1,0 +1,52 @@
+<html>
+<head>
+    <title>
+        Excel file upload and processing : Django Example : ThePythonDjango.Com
+    </title>
+</head>
+<body style="margin-top: 30px;margin-left: 30px;">
+<form action="{% url "master:index" %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<input name="excel_file"
+       required="required"
+       style="border: 1px solid black; padding: 5px;"
+       title="Upload excel file"
+       type="file">
+<p>
+    <input style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;"
+           type="submit"
+           value="Upload">
+    </form>
+<form action="#" method="get">
+    <input name="mytextbox" size="1" type="text" value="8"/>
+    <select name="col_selected_one">
+        {% for col in data_columns_one %}
+        <option value="{{ col }}">{{ col }}</option>
+        {% endfor %}
+    </select>
+    <select name="col_selected_two">
+        {% for col in data_columns_two %}
+        <option value="{{ col }}">{{ col }}</option>
+        {% endfor %}
+    </select>
+    <input class="btn" name="column_button" type="submit" value="Click">
+</form>
+
+{% if alert_message %}
+<script>alert("{{ alert_message }}")</script>
+{% endif %}
+
+<p></p>
+<div style="width:1000;height:100">
+    {{ graph_div|safe }}
+</div>
+<hr>
+
+{% for row in excel_data %}
+{% for cell in row %}
+{{ cell }}&nbsp;&nbsp;
+{% endfor %}
+<br>
+{% endfor %}
+</body>
+</html>
